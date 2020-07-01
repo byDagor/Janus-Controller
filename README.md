@@ -13,18 +13,36 @@ I recommend using the [Simple FOC](https://github.com/askuric/Arduino-FOC) Ardui
 | ------------- |:-------------:|
 | Dimensions      | 51 x 51mm |
 | Power source voltage      | 12V |
-| Continiuos current without cooling    | 10A |
-| Peak current    | 40A |
+| Continiuos current without cooling    | 12A |
+| Continiuos current with cooling    | up to 24A |
+| Peak current    | 70A |
 | Encoder resolution | 4096 cpr/ 0.088 degrees |
-| Temperature sensor range | 0 - 120°C |
+| Temperature sensor range | -10 ~ 120°C |
 
 ## Getting started
+
 ### The board
 In this repository you can find everything you need to get you started with your personal projects. The board was designed around the [JLCPCB SMT Parts Library](https://jlcpcb.com/parts), so you should be able to order an SMD assembled board directly from them for a low price. 
 You can order this board from your preferred manufacturer, you just need to download the [gerber files](Gerber) and the [SMD BOM](BOM_JC20.01.csv). If you don't order your board from JLCPCB you should make sure that the manufacturer has in stock the needed SMD parts, if not it shouldn't be too difficult to find a replacement (except for the DRV8305 and the MA730).
 Furthermore, if you wish to design your own board the [schematic](Schematic) can be a great place to start.  
 
 After receiving the SMD assembled board you need to solder two 220 uF electrolytic capacitors and a few male/ female pins. These pins are optional, but I highly recommend using female header pins for the ESP32 Dev-kit.
+
+### The on-board encoder
+The MA730 Magnetic Encoder works with a diametrically polarized magnet, these can be hard to find but you should be able to find a couple options from eBay. 
+The [MA730 datasheet](https://www.monolithicpower.com/en/documentview/productdocument/index/version/2/document_type/Datasheet/lang/en/sku/MA730/document_id/3563) recommends a Neodymium alloy (N35) cylinder with dimensions Ø5x3mm inserted into an aluminum shaft, as shown in the picture bellow. 
+You can use a solid cylindrical magnet of different dimensions without the aluminum shaft and still get excellent results. 
+![Magnet](Images/MA730Magnet.PNG)   
+The Janus Controller can read the 12-bit ABZ quadrature pins of the encoder to find the position of the rotor. Additionally, a PWM signal can be read to find the absolute position of the rotor (this is not present in the example code at the moment). 
+
+### The three-phase gate driver
+The DRV8305 is a three-phase gate driver that can drive high and low-side N-channel MOSFETS. What makes this driver special is the bunch of programable functions and the protection included.
+With the Janus Controller you can use the DRV8305 in its three operation modes: 6-PWM input, 3-PWM input or 1-PWM input. The [example code](JC01F05/JC01F05.ino) works with the driver set through SPI to operate in the 3-PWM mode.
+One feature I like is it's fault diagnostics, if the nFault pin pulses it means there is a *warning* that can be read through SPI. If the pin is pulled low it means the driver detected a *fault*, which can also be read through SPI, and the output MOSFETs will be placed in their high impedance state.
+The Janus Controller board has a red indicator LED that will turn on if a *warning* or a *fault* is detected.
+A few of the faults that the driver reports are the following: high temperature flags, source under or over-voltage, VDS over current monitors, gate drive fault, etc.
+The picture bellow shows the simplified schematic of the driver that can be found in the [DRV8305 datasheet](https://www.ti.com/lit/ds/symlink/drv8305.pdf?ts=1593641896221&ref_url=https%253A%252F%252Fwww.google.com%252F). Please refer to it if you want to learn more about all the features of this driver IC.
+![DRV8305](Images/DRV8305Schematic.PNG) 
 
 ### Brushless motor selection
 There are a few general rules that should help you choose the best brushless motor for your particular application. For instance, if you want to build a robot arm, a gimbal, or something that needs relative high torque you should get a low KV motor (usually bellow 300 is good) with a big radius in relation to its length. 
@@ -35,10 +53,6 @@ If you're not sure how much current the motor will draw you can substitute de cu
 If the internal resistance of the motor seems too low, there is a parameter in the [example code](JC01F05/JC01F05.ino) that restricts the voltage applied to the motor. Generally, a resistance of around 10 ohms should be perfect.  
 ![TorqueFormula2](Images/TorqueFormula2.PNG)  
 
-### The magnet
-The MA730 Magnetic Encoder works with a diametrically polarized magnet, these can be hard to find but you should be able to find a couple options from eBay. 
-The MA730 datasheet recommends a Neodymium alloy (N35) cylinder with dimensions Ø5x3mm inserted into an aluminum shaft, as shown in the picture bellow. You can use a solid cylindrical magnet of different dimensions without the aluminum shaft and still get excellent results. 
-![Magnet](Images/MA730Magnet.PNG) 
 
 ## Test Station
 The test station is a 3D printed base that holds together the Janus Controller board and a brushless motor with a diametrically polarized magnet. This magnet is attached to the rotor of the motor and placed above the magnetic encoder; around 1.5mm above the encoder is optimal, making sure the center of the magnet is aligned with the center of the encoder.
@@ -56,7 +70,7 @@ alt="IMAGE ALT TEXT HERE" width="300" border="10" /></a>
 
 ## Contact
 
-I'm happy to hear from your projects and to help in any way possible.  
+I'm happy to hear from your projects and to help in any way possible!  
 davidglzrys@gmail.com  
 [Linkedin](https://www.linkedin.com/in/david-g-reyes/)  
 [YouTube](https://www.youtube.com/channel/UC4gsPZan2T4v5LpJ5J_t7sQ/featured)
