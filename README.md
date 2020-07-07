@@ -4,7 +4,7 @@ The Janus Controller is a Brushless motor driver with an on-board magnetic encod
 
 <img src="Images/JC20.01-Features.PNG" width=400 align=left>
 
-Janus Controller was designed to work with ESP32 Dev-Kit1 as a shield so that the programing of the board is easier for hobbyist and students and to bring down the overall price of the board. I'm currently working on a version with an on-board microcontroller. 
+Janus Controller was designed to work with the ESP32 Dev-Kit1 as a shield so that the programing of the board is easier for hobbyist and students, and to bring down the overall price of the board.
 This board can be used to drive brushless motors as an open-loop system or use the on-board encoder to drive the motors as a closed-loop system and use more complicated algorithms, such as Field Oriented Control for position and velocity control.
 I recommend using the [Simple FOC](https://github.com/askuric/Arduino-FOC) Arduino library as it has shown to work perfectly for position and velocity control and is easily implementable, but you can always use your own algorithm. My [example code](JC01F05/JC01F05.ino) uses the [Simple FOC](https://github.com/askuric/Arduino-FOC) library adapted to work with an ESP32.
 
@@ -32,13 +32,10 @@ The video bellow shows what is needed to prepare the board and how to do it. Alt
 " target="_blank"><img src="Images/JCprep.PNG" 
 alt="IMAGE ALT TEXT HERE" width="300" border="10" /></a>
 
-### The on-board encoder
-The MA730 Magnetic Encoder works with a diametrically polarized magnet, these can be hard to find but you should be able to find a couple options from eBay. 
-The [MA730 datasheet](https://www.monolithicpower.com/en/documentview/productdocument/index/version/2/document_type/Datasheet/lang/en/sku/MA730/document_id/3563) recommends a Neodymium alloy (N35) cylinder with dimensions Ø5x3mm inserted into an aluminum shaft, as shown in the picture bellow, placed around 1.5mm above the encoder IC. 
-You can use a solid cylindrical magnet of different dimensions without the aluminum shaft and still get excellent results.  
+### ESP32 DEVKIT
+As stated before, the Janus Controller was designed as a *shield* for the ESP32 DEVKIT. 
 
-![Magnet](Images/MA730Magnet.PNG)   
-The Janus Controller can read the 12-bit ABZ quadrature pins of the encoder to find the position of the rotor. Additionally, a PWM signal can be read to find the absolute position of the rotor (this hasn't been implemented in example code at the moment). 
+## Set-up
 
 ### The three-phase gate driver
 The DRV8305 is a three-phase gate driver that can drive high and low-side N-channel MOSFETS. What makes this driver special is the bunch of programable functions and the protection included.
@@ -49,7 +46,34 @@ A few of the faults that the driver reports are the following: high temperature 
 The picture bellow shows the simplified schematic of the driver that can be found in the [DRV8305 datasheet](https://www.ti.com/lit/ds/symlink/drv8305.pdf?ts=1593641896221&ref_url=https%253A%252F%252Fwww.google.com%252F). Please refer to it if you want to learn more about all the features of this driver IC.
 ![DRV8305](Images/DRV8305Schematic.PNG) 
 
-### Brushless motor selection
+### The on-board encoder
+The MA730 Magnetic Encoder works with a diametrically polarized magnet, these can be hard to find but you should be able to find a couple options from eBay. 
+The [MA730 datasheet](https://www.monolithicpower.com/en/documentview/productdocument/index/version/2/document_type/Datasheet/lang/en/sku/MA730/document_id/3563) recommends a Neodymium alloy (N35) cylinder with dimensions Ø5x3mm inserted into an aluminum shaft, as shown in the picture bellow, placed around 1.5mm above the encoder IC. 
+You can use a solid cylindrical magnet of different dimensions without the aluminum shaft and still get excellent results.  
+
+![Magnet](Images/MA730Magnet.PNG)   
+The Janus Controller can read the 12-bit ABZ quadrature pins of the encoder to find the position of the rotor. Additionally, a PWM signal can be read to find the absolute position of the rotor (this hasn't been implemented in example code at the moment). 
+
+### External encoder
+If you don't want to use the on-board encoder, Janus Controller has access to two GPIOs of the ESP32. These pins can be used to use an external quadrature encoder that should be conected as shown in the picture. Read your encoder's datasheet and check if it needs pull-ups, if so you should be able to use the ESP32's internal pull-ups.
+![External encoder](Images/AMT103.PNG)
+
+
+## The example code
+The example code was done in the Arduino IDE, running the [Simple FOC](https://github.com/askuric/Arduino-FOC) Arduino Library. By changing a simple parameter, this code allows you to control position and velocity of your burshless motor, or setting a voltage as you would do with a DC motor. 
+Make sure you follow the following steps to make sure the code will compile.
+
+### 1. ESP32 set-up
+*Random nerd tutorials* have a really easy to follow guide on how to set-up the ESP32 on the Arduino IDE. Follow the steps on [this link](https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/) and make sure you can compile one of the examples shown.
+
+### 2. Simple FOC library installation
+The [Simple FOC](https://github.com/askuric/Arduino-FOC) repository has an extremely detailed explanation on how to install the library. The easiest way is to install it through the library manager as shown in the picture.
+<img src="Images/LibraryManager.PNG" width=400>
+
+### 3. Running the example
+One you download the [example code](JC01F05/JC01F05.ino) and open it on your Arduino IDE there are a few parameters that you might have to tweak. I really recommend reading the [Simple FOC](https://github.com/askuric/Arduino-FOC) documentation. 
+
+## Brushless motor selection
 There are a few general rules that should help you choose the best brushless motor for your particular application. For instance, if you want to build a robot arm, a gimbal, or something that needs relative high torque you should get a low KV motor (usually bellow 300 is good) with a big radius in relation to its length. 
 Usually, outrunner brushless motors have more poles than their counterpart, the inrunner, so they spin slower and produce more torque. This makes an outrunner the better choice for this type of application. 
 We can use the torque equation of a brushless motor to calculate the ideal torque a motor will produce at a given voltage/ current. The value calculated with this formula will not be the real value because motors are far from ideal. I've found that considering a motor efficiency of around 80% should be good enough for estimating the maximum torque of a brushless motor.
@@ -69,7 +93,7 @@ In the [CAD](CAD) section you can find the CAD for the Test Station, the Janus C
 
 Big J is a five-bar parallel robot that uses direct drive brushless motors as actuators working with two Janus Controllers in position control mode and a master ESP32. Click the image bellow to watch a demo YouTube video.
 
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=RcFdbI5-R5o
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=JJa_QzbcREA
 " target="_blank"><img src="Images/BigJ-GIF.gif" 
 alt="IMAGE ALT TEXT HERE" width="300" border="10" /></a>
 
