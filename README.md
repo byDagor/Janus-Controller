@@ -14,7 +14,7 @@ I recommend using the [Simple FOC](https://github.com/askuric/Arduino-FOC) Ardui
 | Dimensions      | 51 x 51mm |
 | Power source voltage      | 12V |
 | Continuous current without cooling    | 5A |
-| Continuous current with cooling    | up to 10A |
+| Continuous current with (great) cooling   | up to 23A |
 | Peak current    | 24A |
 | Encoder resolution | 4096 cpr/ 0.088 degrees |
 | Temperature sensor range | -10 ~ 120°C |
