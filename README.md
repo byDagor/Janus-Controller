@@ -13,11 +13,11 @@ I recommend using the [Simple FOC](https://github.com/askuric/Arduino-FOC) Ardui
 | ------------- |:-------------:|
 | Dimensions      | 51 x 51mm |
 | Power source voltage      | 12V |
-| Continuous current without cooling    | 12A |
-| Continuous current with cooling    | up to 24A |
-| Peak current    | 50A |
+| Continuous current without cooling    | 5A |
+| Continuous current with cooling    | up to 10A |
+| Peak current    | 24A |
 | Encoder resolution | 4096 cpr/ 0.088 degrees |
-| Temperature sensor range | -10 ~ 120°C |
+| Temperature sensor range | -10 ~ 120Â°C |
 
 ## Getting started
 
@@ -33,7 +33,7 @@ The video bellow shows what is needed to prepare the board and how to do it. Alt
 alt="IMAGE ALT TEXT HERE" width="300" border="10" /></a>
 
 ### ESP32 DEVKIT
-As stated before, the Janus Controller was designed as a *shield* for the ESP32 DEVKIT. 
+As stated before, the Janus Controller was designed as a *shield* for the ESP32 DEVKIT V1. There are a few different ESP32 Devkits out there make sure the one you buy has the same PIN layout as the Janus Controller.
 
 ## Set-up
 
@@ -48,7 +48,7 @@ The picture bellow shows the simplified schematic of the driver that can be foun
 
 ### The on-board encoder
 The MA730 Magnetic Encoder works with a diametrically polarized magnet, these can be hard to find but you should be able to find a couple options from eBay. 
-The [MA730 datasheet](https://www.monolithicpower.com/en/documentview/productdocument/index/version/2/document_type/Datasheet/lang/en/sku/MA730/document_id/3563) recommends a Neodymium alloy (N35) cylinder with dimensions Ø5x3mm inserted into an aluminum shaft, as shown in the picture bellow, placed around 1.5mm above the encoder IC. 
+The [MA730 datasheet](https://www.monolithicpower.com/en/documentview/productdocument/index/version/2/document_type/Datasheet/lang/en/sku/MA730/document_id/3563) recommends a Neodymium alloy (N35) cylinder with dimensions Ã˜5x3mm inserted into an aluminum shaft, as shown in the picture bellow, placed around 1.5mm above the encoder IC. 
 You can use a solid cylindrical magnet of different dimensions without the aluminum shaft and still get excellent results.  
 
 ![Magnet](Images/MA730Magnet.PNG)   
