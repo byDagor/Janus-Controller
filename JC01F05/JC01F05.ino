@@ -49,10 +49,10 @@ void doB1(){encoder.handleB();}
 #define cs 5      //Chip-select
 
 //#####_System Gains_#####
-float ki = 0.15; //0.075;
-float ti = 1.0; //0.0075;
+float ki = 0.025;
+float ti = 1.0;
 float lpFilter = 0.000;
-float kp = 25; //15;
+float kp = 15;
 float voltageRamp = 100;
 float voltageLimit = 1.4/2;
 float velocityLimit = 2000;
@@ -174,7 +174,7 @@ void loop() {
     tFlag = false;
     Serial.println("enGate Enabled - Temperature low");
   }
-  //Serial.println(temp);
+  Serial.println(temp);
 
   //Read nFault pin from DRV8305 - LOW == error / HIGH == normal operation
   int fault = digitalRead(nFault);
@@ -190,12 +190,10 @@ void loop() {
   //Serial.print(a2);
   //Serial.print(",");
   //Serial.println(a3);
-  
 }
 
 //Set DRV8305 to three PWM inputs mode
 void drv_init(){
-  
   digitalWrite(cs, LOW);
   int resp = SPI.transfer(B00111010);
   int resp2 = SPI.transfer(B10000110);
