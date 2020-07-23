@@ -12,10 +12,9 @@ I recommend using the [Simple FOC](https://github.com/askuric/Arduino-FOC) Ardui
 | Specification    | Rating          |
 | ------------- |:-------------:|
 | Dimensions      | 51 x 51mm |
-| Power source voltage      | 12V |
-| Continuous current without cooling    | 5A |
-| Continuous current with (great) cooling   | up to 23A |
-| Peak current    | 24A |
+| Power source voltage      | 5-12V |
+| Continuous current without cooling    | up to 5A |
+| Continuous current with (great) cooling and 2oz PCB   | up to 23A |
 | Encoder resolution | 4096 cpr/ 0.088 degrees |
 | Temperature sensor range | -10 ~ 120°C |
 
@@ -33,7 +32,7 @@ The video bellow shows what is needed to prepare the board and how to do it. Alt
 alt="IMAGE ALT TEXT HERE" width="300" border="10" /></a>
 
 ### ESP32 DEVKIT
-As stated before, the Janus Controller was designed as a *shield* for the ESP32 DEVKIT V1. There are a few different ESP32 Devkits out there make sure the one you buy has the same PIN layout as the Janus Controller.
+As stated before, the Janus Controller was designed as a *shield* for the ESP32 DEVKIT V1. There are a few different ESP32 Devkits out there, make sure the one you buy has the same PIN layout as the Janus Controller.
 
 ## Set-up
 
@@ -66,12 +65,16 @@ Make sure you follow the following steps to make sure the code will compile.
 ### 1. ESP32 set-up
 *Random nerd tutorials* have a really easy to follow guide on how to set-up the ESP32 on the Arduino IDE. Follow the steps on [this link](https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-windows-instructions/) and make sure you can compile one of the examples shown.
 
-### 2. Simple FOC library installation
-The [Simple FOC](https://github.com/askuric/Arduino-FOC) repository has an extremely detailed explanation on how to install the library. The easiest way is to install it through the library manager as shown in the picture.
-<img src="Images/LibraryManager.PNG" width=400>
+### 2. Running the encoder example
+Download the [Encoder Tester](JC01F05/JC01F05.ino) and open it on your Arduino IDE. Upload it to the ESP32 and open the Serial terminal and make sure the measurement is accurate. Move the motor's rotor one whole whole rotation and make sure the trerminal prints 360 degrees. 
 
-### 3. Running the example
-One you download the [example code](JC01F05/JC01F05.ino) and open it on your Arduino IDE there are a few parameters that you might have to tweak. I really recommend reading the [Simple FOC](https://github.com/askuric/Arduino-FOC) documentation. 
+### 3. Simple FOC library installation
+The [Simple FOC](https://github.com/askuric/Arduino-FOC) repository has an extremely detailed explanation on how to install the library. The easiest way is to install it through the library manager as shown in the picture.  
+<img src="Images/LibraryManager.PNG" width=400>
+Currently, the ESP32 isn't supported by the library just yet, if you need a stable version that works for the ESP32 send me a message.
+
+### 4. Running the position control example
+Download the [position control example code](JC01F05/JC01F05.ino) and open it on your Arduino IDE; there are a few parameters that you might have to tweak. I really recommend reading the [Simple FOC](https://github.com/askuric/Arduino-FOC) documentation. 
 
 ## Brushless motor selection
 There are a few general rules that should help you choose the best brushless motor for your particular application. For instance, if you want to build a robot arm, a gimbal, or something that needs relative high torque you should get a low KV motor (usually bellow 300 is good) with a big radius in relation to its length. 
@@ -90,7 +93,6 @@ In the [CAD](CAD) section you can find the CAD for the Test Station, the Janus C
 ![TestStation](Images/TestStationJC20.01.PNG)
 
 ## Practical Example
-
 Big J is a five-bar parallel robot that uses direct drive brushless motors as actuators working with two Janus Controllers in position control mode and a master ESP32. Click the image bellow to watch a demo YouTube video.
 
 <a href="http://www.youtube.com/watch?feature=player_embedded&v=JJa_QzbcREA
@@ -98,7 +100,6 @@ Big J is a five-bar parallel robot that uses direct drive brushless motors as ac
 alt="IMAGE ALT TEXT HERE" width="300" border="10" /></a>
 
 ## Contact
-
 I'm happy to hear from your projects and to help in any way possible!  
 davidglzrys@gmail.com  
 [Linkedin](https://www.linkedin.com/in/david-g-reyes/)  
