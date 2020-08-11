@@ -1,0 +1,7 @@
+﻿ID,Name,Designator,Quantity
+16,25V 470 uF Electrolytic Capacitor,"C13,C14",2
+17,Femal pins,,30
+18,Male pins,,11
+19,Pin jumper,,2
+20,ESP32 DEVKIT,,1
+21,2-pin screw terminal,,1
