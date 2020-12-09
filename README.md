@@ -71,7 +71,6 @@ Download the [Encoder Tester](JC01F05/JC01F05.ino) and open it on your Arduino I
 ### 3. Simple FOC library installation
 The [Simple FOC](https://github.com/askuric/Arduino-FOC) repository has an extremely detailed explanation on how to install the library. The easiest way is to install it through the library manager as shown in the picture.  
 <img src="Images/LibraryManager.PNG" width=400>
-Currently, the ESP32 isn't supported by the library just yet, if you need a stable version that works for the ESP32 send me a message.
 
 ### 4. Running the position control example
 Download the [position control example code](JC01F05/JC01F05.ino) and open it on your Arduino IDE; there are a few parameters that you might have to tweak. I really recommend reading the [Simple FOC](https://github.com/askuric/Arduino-FOC) documentation. 
