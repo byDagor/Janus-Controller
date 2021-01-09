@@ -32,7 +32,7 @@ void loop() {
   float angle = count *360/4096;
   Serial.print("Total turns: ");
   Serial.print(z);
-  Serial.print(", Current angle");
+  Serial.print(", Current angle: ");
   Serial.println(angle);
 }
 

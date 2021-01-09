@@ -1,7 +1,7 @@
 //A and B encoder inputs
-#define CANAL_A 4
-#define CANAL_B 2
-#define INDEX 15
+#define CANAL_A 32
+#define CANAL_B 33
+#define INDEX 13
 
 //count refers to the number of encoder pulses that occured. You add to this number if the motor is rotating in one direction and substract if it's rotating the other direction
 float count = 0, z = 0;
@@ -17,6 +17,9 @@ void setup() {
   //Serial serial communication to computer
   Serial.begin(115200);
 
+  pinMode(15,OUTPUT);
+  digitalWrite(15,HIGH);
+
   //Pinmode for index input
   pinMode(INDEX, INPUT);
   attachInterrupt(digitalPinToInterrupt(33), indexPin, CHANGE);
@@ -29,10 +32,10 @@ void setup() {
 }
 
 void loop() {
-  float angle = count *360/4096;
-  Serial.print("Total turns: ");
+  float angle = count *360/4096; //Your resolution here
+  Serial.print("Times passed through index: ");
   Serial.print(z);
-  Serial.print(", Current angle");
+  Serial.print(", Current angle: ");
   Serial.println(angle);
 }
 
