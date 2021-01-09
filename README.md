@@ -13,8 +13,8 @@ I recommend using the [Simple FOC](https://github.com/askuric/Arduino-FOC) Ardui
 | ------------- |:-------------:|
 | Dimensions      | 51 x 51mm |
 | Power source voltage      | 5-12V |
-| Continuous current without cooling    | up to 5A |
-| Continuous current with (great) cooling and 2oz PCB   | up to 23A |
+| Maximum continuous current | Depends on cooling |
+| Maximum peak current  | up to 23A |
 | Encoder resolution | 4096 cpr/ 0.088 degrees |
 | Temperature sensor range | -10 ~ 120°C |
 
@@ -71,7 +71,6 @@ Download the [Encoder Tester](JC01F05/JC01F05.ino) and open it on your Arduino I
 ### 3. Simple FOC library installation
 The [Simple FOC](https://github.com/askuric/Arduino-FOC) repository has an extremely detailed explanation on how to install the library. The easiest way is to install it through the library manager as shown in the picture.  
 <img src="Images/LibraryManager.PNG" width=400>
-Currently, the ESP32 isn't supported by the library just yet, if you need a stable version that works for the ESP32 send me a message.
 
 ### 4. Running the position control example
 Download the [position control example code](JC01F05/JC01F05.ino) and open it on your Arduino IDE; there are a few parameters that you might have to tweak. I really recommend reading the [Simple FOC](https://github.com/askuric/Arduino-FOC) documentation. 
